@@ -4,6 +4,9 @@ import com.qbhy.apiboot.exceptions.ExampleException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 public class HelloController {
 
@@ -14,7 +17,7 @@ public class HelloController {
 
     @RequestMapping("/exception")
     String testException() throws ExampleException {
-        throw new ExampleException();
+        throw new ExampleException("testException");
     }
 
 }

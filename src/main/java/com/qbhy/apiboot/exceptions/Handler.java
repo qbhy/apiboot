@@ -14,14 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 public class Handler extends ResponseEntityExceptionHandler {
 
     /**
-     * @param request 请求实例
+     * @param request   请求实例
      * @param throwable 异常实例
      * @return 响应实例
      */
     @ExceptionHandler(RenderableException.class)
     @ResponseBody
     ResponseEntity<?> handle(HttpServletRequest request, Throwable throwable) {
-        HttpStatus status = getStatus(request);
+        HttpStatus status = getStatus(request, throwable);
 
         if (throwable instanceof RenderableException) {
             return new ResponseEntity<>(((RenderableException) throwable).render(request, status), status);
@@ -31,10 +31,14 @@ public class Handler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * @param request 请求实例
+     * @param request   请求实例
+     * @param throwable 异常实例
      * @return 返回 http 标准状态码
      */
-    private HttpStatus getStatus(HttpServletRequest request) {
+    private HttpStatus getStatus(HttpServletRequest request, Throwable throwable) {
+        if (throwable instanceof RenderableException) {
+            return ((RenderableException) throwable).getHttpStatus();
+        }
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         if (statusCode == null) {
             return HttpStatus.INTERNAL_SERVER_ERROR;
