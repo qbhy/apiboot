@@ -1,6 +1,6 @@
-package com.qbhy.apiboot.exceptions;
+package com.qbhy.apiboot.app.exceptions;
 
-import com.qbhy.apiboot.http.response.Response;
+import com.qbhy.apiboot.app.http.response.Response;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;

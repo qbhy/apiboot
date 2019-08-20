@@ -1,6 +1,6 @@
-package com.qbhy.apiboot.http.controllers;
+package com.qbhy.apiboot.app.http.controllers;
 
-import com.qbhy.apiboot.exceptions.ExampleException;
+import com.qbhy.apiboot.app.exceptions.ExampleException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

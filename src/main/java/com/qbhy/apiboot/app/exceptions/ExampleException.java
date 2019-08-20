@@ -1,4 +1,4 @@
-package com.qbhy.apiboot.exceptions;
+package com.qbhy.apiboot.app.exceptions;
 
 import org.springframework.http.HttpStatus;
 
