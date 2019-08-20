@@ -10,6 +10,13 @@ public class Response {
     private String message;
     private Object data;
 
+    public Response(Object data) {
+        this.code = 0;
+        this.statusCode = HttpStatus.OK;
+        this.message = "ok";
+        this.data = data;
+    }
+
     public Response(HttpStatus statusCode, int code, String message, Object data) {
         this.code = code;
         this.statusCode = statusCode;
