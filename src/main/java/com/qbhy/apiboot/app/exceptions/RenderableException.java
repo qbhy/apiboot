@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;
 
-abstract class RenderableException extends Exception {
+abstract public class RenderableException extends Exception {
 
     public void setData(Object data) {
         this.data = data;
@@ -13,8 +13,12 @@ abstract class RenderableException extends Exception {
 
     private Object data;
 
-    Response render(HttpServletRequest request, HttpStatus httpStatus) {
+    public Response render(HttpServletRequest request, HttpStatus httpStatus) {
         return new Response(httpStatus, this.getMessage(), data);
+    }
+
+    public Response render(HttpServletRequest request) {
+        return new Response(HttpStatus.BAD_REQUEST, this.getMessage(), data);
     }
 
     /**
