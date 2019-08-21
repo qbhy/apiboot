@@ -9,7 +9,7 @@ public class ExampleException extends RenderableException {
     }
 
     @Override
-    HttpStatus getHttpStatus() {
+    public HttpStatus getHttpStatus() {
         return HttpStatus.BAD_REQUEST;
     }
 }
