@@ -5,43 +5,31 @@ import org.springframework.http.HttpStatus;
 
 @Data
 public class Response {
-    private int code;
+    private Integer code;
     private HttpStatus statusCode;
     private String message;
     private Object data;
 
-    public Response(Object data) {
-        this.code = 0;
-        this.statusCode = HttpStatus.OK;
-        this.message = "ok";
-        this.data = data;
+    public static Response ok(Object data) {
+        return new Response(HttpStatus.OK, 0, "ok", data);
     }
 
-    public Response(HttpStatus statusCode, int code, String message, Object data) {
+    public Response(HttpStatus statusCode, Integer code, String message, Object data) {
         this.code = code;
         this.statusCode = statusCode;
         this.message = message;
         this.data = data;
     }
 
-    public Response(HttpStatus statusCode, String message) {
-        this.statusCode = statusCode;
-        this.message = message;
-        this.code = 0;
-        this.data = null;
+    public static Response fail(Object data) {
+        return new Response(HttpStatus.BAD_REQUEST, -1, "fail", data);
     }
 
-    public Response(HttpStatus statusCode, String message, Object data) {
-        this.statusCode = statusCode;
-        this.message = message;
-        this.data = data;
-        this.code = 0;
+    public static Response fail(HttpStatus statusCode, String msg) {
+        return new Response(statusCode, -1, msg, null);
     }
 
-    public Response(String message, Object data, int code) {
-        this.statusCode = HttpStatus.BAD_REQUEST;
-        this.message = message;
-        this.data = data;
-        this.code = code;
+    public static Response fail(HttpStatus statusCode, String msg, Object data) {
+        return new Response(statusCode, -1, msg, data);
     }
 }

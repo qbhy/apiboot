@@ -27,7 +27,7 @@ public class Handler extends ResponseEntityExceptionHandler {
             return new ResponseEntity<>(((RenderableException) throwable).render(request, status), status);
         }
 
-        return new ResponseEntity<>(new Response(status, throwable.getMessage()), status);
+        return new ResponseEntity<>(Response.fail(status, throwable.getMessage()), status);
     }
 
     /**

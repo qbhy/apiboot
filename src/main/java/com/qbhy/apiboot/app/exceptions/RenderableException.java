@@ -13,12 +13,8 @@ abstract public class RenderableException extends Exception {
 
     private Object data;
 
-    public Response render(HttpServletRequest request, HttpStatus httpStatus) {
-        return new Response(httpStatus, this.getMessage(), data);
-    }
-
-    public Response render(HttpServletRequest request) {
-        return new Response(HttpStatus.BAD_REQUEST, this.getMessage(), data);
+    Response render(HttpServletRequest request, HttpStatus httpStatus) {
+        return Response.fail(httpStatus, this.getMessage(), data);
     }
 
     /**
