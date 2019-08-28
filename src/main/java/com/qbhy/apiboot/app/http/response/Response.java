@@ -3,8 +3,10 @@ package com.qbhy.apiboot.app.http.response;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
+import java.io.Serializable;
+
 @Data
-public class Response {
+public class Response implements Serializable {
     private Integer code;
     private HttpStatus statusCode;
     private String message;
