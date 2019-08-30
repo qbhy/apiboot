@@ -22,6 +22,13 @@ public class SampleTest {
     }
 
     @Test
+    public void testFindByName() {
+        System.out.println(("----- findByName method test ------"));
+        User user = userRepository.findUserByName("测试name");
+        System.out.println(user);
+    }
+
+    @Test
     public void testCreate() {
         System.out.println(("----- save method test ------"));
         User user = new User("测试name", "avatar");

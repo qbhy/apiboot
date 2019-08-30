@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 @CacheConfig(cacheNames = "hello")
 public class HelloController extends Controller {
 
-    @RequestMapping("/")
     @Cacheable
+    @RequestMapping("/")
     public Response hello() {
         System.out.println("hello 方法被调用了");
         return ok("hello");
