@@ -1,6 +1,6 @@
 package com.qbhy.apiboot.framework.auth.access;
 
-import com.qbhy.apiboot.framework.fmt.Stringify;
+import com.qbhy.apiboot.framework.contracts.fmt.Stringify;
 
 public class Response implements Stringify {
 

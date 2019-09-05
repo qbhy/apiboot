@@ -9,7 +9,11 @@ import org.springframework.cache.annotation.EnableCaching;
 public class ApiApplication {
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(ApiApplication.class, args);
+        SpringApplication app = new SpringApplication(ApiApplication.class);
+
+        // 可以操作点什么
+
+        app.run(args);
     }
 
 }
