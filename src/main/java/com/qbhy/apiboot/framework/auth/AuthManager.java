@@ -11,6 +11,10 @@ public class AuthManager {
         this.guards = guards;
     }
 
+    public Map<String, Guard> getGuards() {
+        return guards;
+    }
+
     public Guard guard(String name) throws GuardNotFoundException {
         Guard guard = this.guards.get(name);
         if (guard != null) {

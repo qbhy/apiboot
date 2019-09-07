@@ -1,6 +1,8 @@
 package com.qbhy.apiboot.framework.contracts.auth;
 
-public interface AuthenticateAble {
+import java.io.Serializable;
+
+public interface AuthenticateAble extends Serializable {
     /**
      * Get the name of the unique identifier for the user.
      *

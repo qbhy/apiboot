@@ -2,6 +2,7 @@ package com.qbhy.apiboot.app.http.response;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.io.Serializable;
 
@@ -33,5 +34,9 @@ public class Response implements Serializable {
 
     public static Response fail(HttpStatus statusCode, String msg, Object data) {
         return new Response(statusCode, -1, msg, data);
+    }
+
+    public ResponseEntity<?> responseEntity(){
+        return new ResponseEntity<>(this, this.statusCode);
     }
 }

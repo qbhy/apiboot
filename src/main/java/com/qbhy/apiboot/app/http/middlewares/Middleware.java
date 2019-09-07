@@ -15,7 +15,7 @@ abstract public class Middleware implements Filter {
             try {
                 this.handle(request, response, chain);
             } catch (Exception e) {
-                return;
+                throw new ServletException(e);
             }
         }
         chain.doFilter(servletRequest, response);

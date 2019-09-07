@@ -5,12 +5,11 @@ import com.qbhy.apiboot.framework.contracts.auth.AuthenticateAble;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Data
 @Entity
 @Table(name = "users")
-public class User implements Serializable, AuthenticateAble {
+public class User implements AuthenticateAble {
 
     public User() {
     }

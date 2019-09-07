@@ -28,7 +28,7 @@ public class AuthConfig {
     @Bean
     public GuardProvider guards() {
         return () -> {
-            Map<String, Guard> guards = new HashMap<String, Guard>();
+            Map<String, Guard> guards = new HashMap<>();
 
             // 添加guard
             guards.put("jwt", new JwtGuard((UserProvider) SpringContextUtil.getBean("database.userProvider")));

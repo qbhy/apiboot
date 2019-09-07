@@ -18,9 +18,9 @@ public class AppConfig {
     @Bean
     public ServiceRegister registerProviders() {
         return () -> {
-            ArrayList<ServiceProvider> serviceProviders = new ArrayList<ServiceProvider>();
+            ArrayList<ServiceProvider> serviceProviders = new ArrayList<>();
 
-            // 添加服务提供者
+            // 在此处添加服务提供者
             serviceProviders.add(new AuthServiceProvider());
 
             // 注册服务

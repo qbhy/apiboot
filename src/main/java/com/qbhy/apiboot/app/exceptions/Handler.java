@@ -18,22 +18,22 @@ public class Handler extends ResponseEntityExceptionHandler {
      * @param throwable 异常实例
      * @return 响应实例
      */
-    @ExceptionHandler(RenderableException.class)
+    @ExceptionHandler(Throwable.class)
     @ResponseBody
     ResponseEntity<?> handle(HttpServletRequest request, Throwable throwable) {
         HttpStatus status = getStatus(request, throwable);
 
         if (throwable instanceof RenderableException) {
-            return new ResponseEntity<>(((RenderableException) throwable).render(request, status), status);
+            return ((RenderableException) throwable).render(request, status).responseEntity();
         }
 
-        return new ResponseEntity<>(Response.fail(status, throwable.getMessage()), status);
+        return Response.fail(status, throwable.getMessage()).responseEntity();
     }
 
     /**
      * @param request   请求实例
      * @param throwable 异常实例
-     * @return 返回 http 标准状态码
+     * @return 返回标准 http 状态码
      */
     private HttpStatus getStatus(HttpServletRequest request, Throwable throwable) {
         if (throwable instanceof RenderableException) {
