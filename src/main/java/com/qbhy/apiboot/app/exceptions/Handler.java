@@ -1,6 +1,8 @@
 package com.qbhy.apiboot.app.exceptions;
 
-import com.qbhy.apiboot.app.http.response.Response;
+import com.qbhy.apiboot.framework.contracts.debug.HttpExceptionHandler;
+import com.qbhy.apiboot.framework.debug.RenderableException;
+import com.qbhy.apiboot.framework.http.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
-public class Handler extends ResponseEntityExceptionHandler {
+public class Handler extends ResponseEntityExceptionHandler implements HttpExceptionHandler {
 
     /**
      * @param request   请求实例

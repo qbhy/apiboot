@@ -1,4 +1,4 @@
-package com.qbhy.apiboot.app.http.response;
+package com.qbhy.apiboot.framework.http.response;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;

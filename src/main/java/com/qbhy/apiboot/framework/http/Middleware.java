@@ -1,4 +1,4 @@
-package com.qbhy.apiboot.app.http.middlewares;
+package com.qbhy.apiboot.framework.http;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -6,7 +6,7 @@ import java.io.IOException;
 
 abstract public class Middleware implements Filter {
 
-    abstract void handle(HttpServletRequest request, ServletResponse response, FilterChain chain) throws Exception;
+    public abstract void handle(HttpServletRequest request, ServletResponse response, FilterChain chain) throws Exception;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse response, FilterChain chain) throws IOException, ServletException {

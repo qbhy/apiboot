@@ -1,4 +1,4 @@
-package com.qbhy.apiboot.framework.contracts.kernel;
+package com.qbhy.apiboot.framework.contracts.http;
 
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Dockable;
 import org.springframework.http.server.ServletServerHttpRequest;
