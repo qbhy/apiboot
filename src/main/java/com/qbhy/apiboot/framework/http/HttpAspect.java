@@ -1,7 +1,7 @@
 package com.qbhy.apiboot.framework.http;
 
+import com.qbhy.apiboot.app.exceptions.Handler;
 import com.qbhy.apiboot.app.http.HttpKernel;
-import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Destination;
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Dockable;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -12,7 +12,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.http.server.ServletServerHttpRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -20,6 +19,9 @@ import java.util.Objects;
 @Aspect
 @Component
 public class HttpAspect {
+
+    @Autowired
+    Handler exceptionHandler;
 
     private Map<String, List<Dockable>> middlewareGroups;
     private List<Dockable> globalMiddlewares;
@@ -36,9 +38,7 @@ public class HttpAspect {
 
     @Around("controllerAspect()")
     public Object aroundPointcut(ProceedingJoinPoint joinPoint) throws Throwable {
-        ServletServerHttpRequest request = new ServletServerHttpRequest(
-                ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest()
-        );
+        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
 //        Class targetClass = joinPoint.getTarget().getClass();
 //        Method method = targetClass.getMethod(joinPoint.getSignature().getName());
 
@@ -50,6 +50,5 @@ public class HttpAspect {
                 .send(request)
                 .through(middlewares)
                 .then(traveler -> joinPoint.proceed());
-
     }
 }

@@ -3,7 +3,6 @@ package com.qbhy.apiboot.framework.kernel.pipeline;
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Destination;
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Dockable;
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Pipeline;
-import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Stack;
 
 import java.util.List;
 
@@ -43,24 +42,6 @@ abstract public class BasePipeline implements Pipeline {
      */
     @Override
     public Object then(Destination destination) throws Throwable {
-        Stack stack = ListUtil.reduce(this.stops, this.prepareDestination(destination));
-
-        return stack.next(this.traveler);
-    }
-
-
-    protected Stack prepareDestination(Destination destination) {
-        Object passable = this.traveler;
-        return (Object traveler) -> {
-            try {
-                return destination.handle(traveler);
-            } catch (Throwable e) {
-                return handleException(passable, e);
-            }
-        };
-    }
-
-    protected Object handleException(Object passable, Throwable e) throws Throwable {
-        throw e;
+        return DockableUtil.reduce(this.stops, destination::handle).next(this.traveler);
     }
 }

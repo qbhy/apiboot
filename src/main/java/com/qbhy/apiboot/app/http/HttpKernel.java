@@ -5,11 +5,10 @@ import com.qbhy.apiboot.app.http.middlewares.HelloMiddleware;
 import com.qbhy.apiboot.framework.contracts.http.HttpMiddlewareRegister;
 import com.qbhy.apiboot.framework.contracts.http.Kernel;
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Dockable;
-import com.qbhy.apiboot.framework.http.HttpMiddleware;
 import com.qbhy.apiboot.framework.http.response.Response;
-import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Component
@@ -45,7 +44,7 @@ public class HttpKernel implements Kernel, HttpMiddlewareRegister {
     }
 
     @Override
-    public Response handle(ServletServerHttpRequest request) {
+    public Response handle(HttpServletRequest request) {
         return null;
     }
 }

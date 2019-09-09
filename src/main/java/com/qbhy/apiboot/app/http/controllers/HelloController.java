@@ -15,11 +15,11 @@ public class HelloController extends Controller {
     @RequestMapping("/")
     public Response hello() {
         System.out.println("hello 方法被调用了");
-        return ok("hello");
+        return ok("hello controller");
     }
 
     @RequestMapping("/exception")
-    String testException() throws ExampleException {
+    String testException() throws Throwable {
         throw new ExampleException("testException");
     }
 

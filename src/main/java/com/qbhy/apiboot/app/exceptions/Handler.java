@@ -32,12 +32,12 @@ public class Handler extends ResponseEntityExceptionHandler implements HttpExcep
      */
     @ExceptionHandler(Throwable.class)
     @ResponseBody
+    @Override
     public ResponseEntity<?> handle(HttpServletRequest request, Throwable throwable) {
         this.report(throwable);
 
         HttpStatus status = getStatus(request, throwable);
         Object data = reformat(throwable);
-
         if (throwable instanceof RenderableException) {
             RenderableException e = (RenderableException) throwable;
             e.setData(data);
