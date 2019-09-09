@@ -9,7 +9,7 @@ public interface Pipeline {
      * @param  traveler traveler
      * @return $this
      */
-    public Pipeline send(Passable traveler);
+    public Pipeline send(Object traveler);
 
     /**
      * Set the stops of the pipeline.
@@ -25,5 +25,5 @@ public interface Pipeline {
      * @param  destination destination
      * @return Object
      */
-    public Object then(Destination destination);
+    public Object then(Destination destination) throws Throwable;
 }

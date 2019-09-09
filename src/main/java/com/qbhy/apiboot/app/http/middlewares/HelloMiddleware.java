@@ -5,7 +5,7 @@ import com.qbhy.apiboot.framework.http.HttpMiddleware;
 import com.qbhy.apiboot.framework.http.response.Response;
 import org.springframework.http.server.ServletServerHttpRequest;
 
-public class ExampleMiddleware extends HttpMiddleware {
+public class HelloMiddleware extends HttpMiddleware {
     @Override
     public Response handle(ServletServerHttpRequest request, Stack stack) throws Throwable {
         Object result = stack.next(request);

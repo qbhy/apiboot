@@ -3,7 +3,6 @@ package com.qbhy.apiboot.app.http.controllers;
 import com.qbhy.apiboot.app.exceptions.ExampleException;
 import com.qbhy.apiboot.framework.http.response.Response;
 import com.qbhy.apiboot.framework.http.Controller;
-import com.qbhy.apiboot.framework.http.HttpMiddleware;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +13,6 @@ public class HelloController extends Controller {
 
 //    @Cacheable
     @RequestMapping("/")
-    @HttpMiddleware(value = "hello")
     public Response hello() {
         System.out.println("hello 方法被调用了");
         return ok("hello");
