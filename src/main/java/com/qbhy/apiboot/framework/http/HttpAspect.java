@@ -39,11 +39,15 @@ public class HttpAspect {
     @Around("controllerAspect()")
     public Object aroundPointcut(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-//        Class targetClass = joinPoint.getTarget().getClass();
-//        Method method = targetClass.getMethod(joinPoint.getSignature().getName());
 
         // 需要执行的中间件
         List<Dockable> middlewares = this.globalMiddlewares;
+
+        /**
+         * 这里需要根据注解来添加普通中间件，还没写完
+         Class targetClass = joinPoint.getTarget().getClass();
+         Method method = targetClass.getMethod(joinPoint.getSignature().getName());
+         **/
 
         // 通过管道执行中间件和控制器逻辑
         return (new HttpMiddlewarePipeline())
