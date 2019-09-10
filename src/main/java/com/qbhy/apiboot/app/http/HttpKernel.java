@@ -1,7 +1,7 @@
 package com.qbhy.apiboot.app.http;
 
 import com.qbhy.apiboot.app.http.middlewares.ExampleMiddleware;
-import com.qbhy.apiboot.app.http.middlewares.HelloMiddleware;
+import com.qbhy.apiboot.app.http.middlewares.ExampleGlobalMiddleware;
 import com.qbhy.apiboot.framework.contracts.http.HttpMiddlewareRegister;
 import com.qbhy.apiboot.framework.contracts.http.Kernel;
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Dockable;
@@ -38,8 +38,7 @@ public class HttpKernel implements Kernel, HttpMiddlewareRegister {
     @Override
     public List<Dockable> registerGlobalMiddlewares() {
         return Arrays.asList(
-                new ExampleMiddleware(),
-                new HelloMiddleware()
+                new ExampleGlobalMiddleware()
         );
     }
 

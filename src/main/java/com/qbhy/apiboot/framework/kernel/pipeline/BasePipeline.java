@@ -42,6 +42,6 @@ abstract public class BasePipeline implements Pipeline {
      */
     @Override
     public Object then(Destination destination) throws Throwable {
-        return DockableUtil.reduce(this.stops, destination::handle).next(this.traveler);
+        return PipelineUtil.reduce(this.stops, destination::handle).next(this.traveler);
     }
 }

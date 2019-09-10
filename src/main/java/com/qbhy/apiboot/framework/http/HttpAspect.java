@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.http.server.ServletServerHttpRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -45,9 +45,18 @@ public class HttpAspect {
 
         /**
          * 这里需要根据注解来添加普通中间件，还没写完
-         Class targetClass = joinPoint.getTarget().getClass();
          Method method = targetClass.getMethod(joinPoint.getSignature().getName());
          **/
+        Class targetClass = joinPoint.getTarget().getClass();
+        Middleware targetClassAnnotation = (Middleware) targetClass.getAnnotation(Middleware.class);
+        if (targetClassAnnotation != null) {
+
+            middlewares = targetClassAnnotation.excludeGlobal() ? new ArrayList<>() : middlewares;
+
+            if (this.middlewareGroups.containsKey(targetClassAnnotation.group())) {
+                middlewares.addAll(this.middlewareGroups.get(targetClassAnnotation.group()));
+            }
+        }
 
         // 通过管道执行中间件和控制器逻辑
         return (new HttpMiddlewarePipeline())

@@ -1,7 +1,6 @@
 import com.qbhy.apiboot.ApiApplication;
 import com.qbhy.apiboot.framework.auth.AuthManager;
 import com.qbhy.apiboot.framework.auth.GuardNotFoundException;
-import com.qbhy.apiboot.framework.util.SpringContextUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ public class BaseKernelTest {
     private AuthManager authManager;
 
     @Test
-    public void testAuthService() throws GuardNotFoundException {
+    public void testAuthService() throws Throwable {
         System.out.println(authManager.getGuards());
     }
 }

@@ -1,6 +1,8 @@
 package com.qbhy.apiboot.app.http.controllers;
 
 import com.qbhy.apiboot.app.exceptions.ExampleException;
+import com.qbhy.apiboot.app.http.middlewares.ExampleMiddleware;
+import com.qbhy.apiboot.framework.http.Middleware;
 import com.qbhy.apiboot.framework.http.response.Response;
 import com.qbhy.apiboot.framework.http.Controller;
 import org.springframework.cache.annotation.CacheConfig;
@@ -9,12 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CacheConfig(cacheNames = "hello")
+@Middleware(group = "example", excludeGlobal = true)
 public class HelloController extends Controller {
 
-//    @Cacheable
+    //    @Cacheable
     @RequestMapping("/")
+//    @Middleware(group = "example")
     public Response hello() {
-        System.out.println("hello 方法被调用了");
         return ok("hello controller");
     }
 
