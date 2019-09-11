@@ -18,7 +18,7 @@ public @interface Middleware {
     /**
      * 排除组里面的某些中间件如果有的话
      *
-     * @return 需要排除的类名
+     * @return 需要排除的组名数组
      */
     String[] excludes() default {};
 
