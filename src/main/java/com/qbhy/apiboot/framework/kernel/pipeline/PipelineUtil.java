@@ -3,7 +3,6 @@ package com.qbhy.apiboot.framework.kernel.pipeline;
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Dockable;
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Stack;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
