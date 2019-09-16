@@ -6,7 +6,7 @@ import com.qbhy.apiboot.framework.auth.JwtGuard;
 import com.qbhy.apiboot.framework.contracts.auth.Guard;
 import com.qbhy.apiboot.framework.contracts.auth.GuardProvider;
 import com.qbhy.apiboot.framework.contracts.auth.UserProvider;
-import com.qbhy.apiboot.framework.util.SpringContextUtil;
+import com.qbhy.apiboot.framework.foundation.App;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +20,10 @@ public class AuthConfig {
     @Autowired
     private UserRepository userRepository;
 
-    @Bean(name = "database.userProvider")
+    @Autowired
+    private DatabaseUserProvider databaseUserProvider;
+
+    @Bean
     public DatabaseUserProvider userProvider() {
         return new DatabaseUserProvider(userRepository);
     }
@@ -31,7 +34,7 @@ public class AuthConfig {
             Map<String, Guard> guards = new HashMap<>();
 
             // 添加guard
-            guards.put("jwt", new JwtGuard((UserProvider) SpringContextUtil.getBean("database.userProvider")));
+            guards.put("jwt", new JwtGuard(databaseUserProvider));
 
             return guards;
         };

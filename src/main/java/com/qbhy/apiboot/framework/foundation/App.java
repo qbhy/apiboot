@@ -1,4 +1,4 @@
-package com.qbhy.apiboot.framework.util;
+package com.qbhy.apiboot.framework.foundation;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SpringContextUtil implements ApplicationContextAware {
+public class App implements ApplicationContextAware {
 
     /**
      * 上下文对象实例
@@ -16,7 +16,7 @@ public class SpringContextUtil implements ApplicationContextAware {
 
     @Autowired
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        SpringContextUtil.applicationContext = applicationContext;
+        App.applicationContext = applicationContext;
     }
 
     /**

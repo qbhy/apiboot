@@ -1,14 +1,15 @@
 package com.qbhy.apiboot.framework.auth;
 
 import com.qbhy.apiboot.framework.contracts.auth.Guard;
+import com.qbhy.apiboot.framework.contracts.auth.GuardProvider;
 
 import java.util.Map;
 
 public class AuthManager {
     private Map<String, Guard> guards;
 
-    public AuthManager(Map<String, Guard> guards) {
-        this.guards = guards;
+    public AuthManager(GuardProvider provider) {
+        this.guards = provider.guards();
     }
 
     public Map<String, Guard> getGuards() {

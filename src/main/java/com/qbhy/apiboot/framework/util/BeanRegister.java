@@ -1,11 +1,12 @@
 package com.qbhy.apiboot.framework.util;
 
+import com.qbhy.apiboot.framework.foundation.App;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ConfigurableApplicationContext;
 
-public class ManualRegisterBeanUtil {
+public class BeanRegister {
     /**
      * 主动向Spring容器中注册bean
      *
@@ -15,8 +16,8 @@ public class ManualRegisterBeanUtil {
      * @param <T>
      * @return 返回注册到容器中的bean对象
      */
-    public static <T> T registerBean(String name, Class<T> clazz, Object... args) {
-        ConfigurableApplicationContext applicationContext = (ConfigurableApplicationContext) SpringContextUtil.getApplicationContext();
+    public static <T> T bind(String name, Class<T> clazz, Object... args) {
+        ConfigurableApplicationContext applicationContext = (ConfigurableApplicationContext) App.getApplicationContext();
         if (applicationContext.containsBean(name)) {
             Object bean = applicationContext.getBean(name);
             if (bean.getClass().isAssignableFrom(clazz)) {

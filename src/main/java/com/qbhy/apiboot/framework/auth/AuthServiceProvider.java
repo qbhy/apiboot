@@ -1,27 +1,28 @@
 package com.qbhy.apiboot.framework.auth;
 
-import com.qbhy.apiboot.framework.contracts.auth.Guard;
 import com.qbhy.apiboot.framework.contracts.auth.GuardProvider;
-import com.qbhy.apiboot.framework.contracts.kernel.ServiceProvider;
-import com.qbhy.apiboot.framework.util.ManualRegisterBeanUtil;
-import com.qbhy.apiboot.framework.util.SpringContextUtil;
+import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
+@Component
+public class AuthServiceProvider implements FactoryBean<AuthManager> {
 
-public class AuthServiceProvider implements ServiceProvider {
-    public AuthServiceProvider() {
+    @Autowired
+    private GuardProvider guardProvider;
+
+    @Override
+    public Class<?> getObjectType() {
+        return AuthManager.class;
     }
 
     @Override
-    public void register() {
-        GuardProvider guardProvider = SpringContextUtil.getBean(GuardProvider.class);
-        Map<String, Guard> guards = new HashMap<>();
+    public boolean isSingleton() {
+        return true;
+    }
 
-        if (guardProvider != null) {
-            guards = guardProvider.guards();
-        }
-
-        ManualRegisterBeanUtil.registerBean("authManager", AuthManager.class, guards);
+    @Override
+    public AuthManager getObject() throws Exception {
+        return new AuthManager(guardProvider);
     }
 }

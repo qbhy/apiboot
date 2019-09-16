@@ -11,7 +11,7 @@ public class ApplicationStartedEventListener implements ApplicationListener<Appl
 
     @Override
     public void onApplicationEvent(ApplicationStartedEvent e) {
-        e.getApplicationContext().getBean(ServiceRegister.class).registerServices();
+//        e.getApplicationContext().getBean(ServiceRegister.class).registerServices();
     }
 
     @Override
