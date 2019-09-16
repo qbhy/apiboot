@@ -32,7 +32,7 @@ public class HttpAspect {
         this.globalMiddlewareStack = kernel.registerGlobalMiddlewares();
     }
 
-    @Pointcut("execution(* com.qbhy.apiboot.app.http.controllers..*(..))")
+    @Pointcut("execution(public * com.qbhy.apiboot.app.http.controllers..*(..))")
     public void controllerAspect() {
     }
 
@@ -88,8 +88,8 @@ public class HttpAspect {
         List<Dockable> dockables = new ArrayList<>();
 
         for (String group : groups) {
-            if (exclude.indexOf(group) == -1 && this.middlewareGroups.containsKey(group)) {
-                dockables.addAll(this.middlewareGroups.get(group));
+            if (exclude.indexOf(group) == -1 && middlewareGroups.containsKey(group)) {
+                dockables.addAll(middlewareGroups.get(group));
             }
         }
 
@@ -97,6 +97,13 @@ public class HttpAspect {
     }
 
     private ResponseEntity<?> toResponse(Object data) {
-        return data instanceof Response ? ((Response) data).responseEntity() : Response.ok(data).responseEntity();
+        if (data instanceof ResponseEntity) {
+            return (ResponseEntity) data;
+        }
+        if (data instanceof Response) {
+            return ((Response) data).responseEntity();
+        }
+
+        return Response.ok(data).responseEntity();
     }
 }

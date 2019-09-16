@@ -37,6 +37,6 @@ public class Response implements Serializable {
     }
 
     public ResponseEntity<?> responseEntity(){
-        return new ResponseEntity<>(this, this.statusCode);
+        return new HttpResponseEntity<>(this, this.statusCode);
     }
 }

@@ -19,7 +19,7 @@ public class HelloController extends BaseController {
     }
 
     @RequestMapping("/exception")
-    Object testException() throws Throwable {
+   public Object testException() throws Throwable {
         throw new ExampleException("testException");
     }
 

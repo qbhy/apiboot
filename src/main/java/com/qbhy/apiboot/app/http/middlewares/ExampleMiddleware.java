@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 public class ExampleMiddleware extends HttpMiddleware {
     @Override
     public ResponseEntity handle(HttpServletRequest request, Stack stack) throws Throwable {
-        System.out.println("ExampleMiddleware");
-        return (ResponseEntity) stack.next(request);
+        ResponseEntity response = (ResponseEntity) stack.next(request);
+        response.getHeaders().set("test", "example");
+        return  response;
     }
 }
