@@ -2,7 +2,7 @@ package com.qbhy.apiboot.framework.http;
 
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Dockable;
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Stack;
-import com.qbhy.apiboot.framework.http.response.Response;
+import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,5 +15,5 @@ abstract public class HttpMiddleware implements Dockable {
         return stack.next(passable);
     }
 
-    abstract public Object handle(HttpServletRequest request, Stack stack) throws Throwable;
+    abstract public ResponseEntity handle(HttpServletRequest request, Stack stack) throws Throwable;
 }

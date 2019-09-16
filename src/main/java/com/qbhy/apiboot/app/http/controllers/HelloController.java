@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController extends BaseController {
 
     @RequestMapping("/")
-    public Response hello() {
+    public Object hello() {
         return ok("hello controller");
     }
 
     @RequestMapping("/exception")
-    String testException() throws Throwable {
+    Object testException() throws Throwable {
         throw new ExampleException("testException");
     }
 

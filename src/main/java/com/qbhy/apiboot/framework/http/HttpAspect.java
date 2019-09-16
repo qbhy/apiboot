@@ -3,9 +3,11 @@ package com.qbhy.apiboot.framework.http;
 import com.qbhy.apiboot.app.exceptions.Handler;
 import com.qbhy.apiboot.app.http.HttpKernel;
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Dockable;
+import com.qbhy.apiboot.framework.http.response.Response;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -22,12 +24,12 @@ public class HttpAspect {
     Handler exceptionHandler;
 
     private Map<String, List<Dockable>> middlewareGroups;
-    private List<Dockable> globalMiddlewares;
+    private List<Dockable> globalMiddlewareStack;
 
     @Autowired
     public void setMiddlewareGroups(HttpKernel kernel) {
         this.middlewareGroups = kernel.registerMiddlewareGroups();
-        this.globalMiddlewares = kernel.registerGlobalMiddlewares();
+        this.globalMiddlewareStack = kernel.registerGlobalMiddlewares();
     }
 
     @Pointcut("execution(* com.qbhy.apiboot.app.http.controllers..*(..))")
@@ -39,7 +41,7 @@ public class HttpAspect {
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
 
         // 需要执行的中间件
-        List<Dockable> middlewares = this.globalMiddlewares;
+        List<Dockable> middlewareStack = new ArrayList<>(this.globalMiddlewareStack);
         List<String> groups = new ArrayList<>();
         List<String> excludes = new ArrayList<>();
 
@@ -47,7 +49,7 @@ public class HttpAspect {
         Middleware targetClassAnnotation = (Middleware) targetClass.getAnnotation(Middleware.class);
 
         if (targetClassAnnotation != null) {
-            middlewares = targetClassAnnotation.excludeGlobal() ? new ArrayList<>() : middlewares;
+            middlewareStack = targetClassAnnotation.excludeGlobal() ? new ArrayList<>() : middlewareStack;
             groups.addAll(Arrays.asList(targetClassAnnotation.groups()));
             excludes.addAll(Arrays.asList(targetClassAnnotation.excludes()));
         }
@@ -56,23 +58,23 @@ public class HttpAspect {
         Middleware targetMethodAnnotation = method.getAnnotation(Middleware.class);
         if (targetMethodAnnotation != null) {
             if (targetMethodAnnotation.template() == MiddlewareTemplate.BLANK) {
-                middlewares = targetMethodAnnotation.excludeGlobal() ? new ArrayList<>() : this.globalMiddlewares;
+                middlewareStack = targetMethodAnnotation.excludeGlobal() ? new ArrayList<>() : this.globalMiddlewareStack;
                 groups = new ArrayList<>();
                 excludes = new ArrayList<>();
             } else if (targetMethodAnnotation.template() == MiddlewareTemplate.EXTENDS) {
-                middlewares = targetMethodAnnotation.excludeGlobal() ? new ArrayList<>() : this.globalMiddlewares;
+                middlewareStack = targetMethodAnnotation.excludeGlobal() ? new ArrayList<>() : this.globalMiddlewareStack;
             }
             groups.addAll(Arrays.asList(targetMethodAnnotation.groups()));
             excludes.addAll(Arrays.asList(targetMethodAnnotation.excludes()));
         }
 
-        middlewares.addAll(getGroups(groups, excludes));
+        middlewareStack.addAll(getGroups(groups, excludes));
 
         // 通过管道执行中间件和控制器逻辑
         return (new HttpMiddlewarePipeline())
                 .send(request)
-                .through(middlewares)
-                .then(traveler -> joinPoint.proceed());
+                .through(middlewareStack)
+                .then(traveler -> toResponse(joinPoint.proceed()));
     }
 
     /**
@@ -92,5 +94,9 @@ public class HttpAspect {
         }
 
         return dockables;
+    }
+
+    private ResponseEntity<?> toResponse(Object data) {
+        return data instanceof Response ? ((Response) data).responseEntity() : Response.ok(data).responseEntity();
     }
 }
