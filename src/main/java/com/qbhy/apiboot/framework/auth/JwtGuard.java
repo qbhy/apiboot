@@ -21,7 +21,7 @@ public class JwtGuard extends AbstractGuard {
 
     private AuthenticateAble user;
 
-    private Map<String, String> credentials;
+    private Map<String, String> credentials = new HashMap<>();
 
     public JwtGuard(UserProvider userProvider, Algorithm algorithmHS) {
         this.userProvider = userProvider;
@@ -60,7 +60,6 @@ public class JwtGuard extends AbstractGuard {
         // 从 headers 中获取 token
         String token = request.getHeader("Authorization");
         if (token != null && token.startsWith("Bearer ")) {
-            credentials = new HashMap<>();
             credentials.put("token", token.substring(6));
             System.out.println(credentials);
         }
