@@ -2,7 +2,7 @@ package com.qbhy.apiboot.framework.contracts.auth;
 
 import java.util.Map;
 
-public interface Guard {
+public interface Guard extends Cloneable {
 
     /**
      * Determine if the current user is authenticated.
@@ -32,13 +32,7 @@ public interface Guard {
      */
     public Object id();
 
-    /**
-     * Validate a user's credentials.
-     *
-     * @param credentials 登录凭证
-     * @return bool
-     */
-    public boolean validate(Map<String, String> credentials);
+    public Guard parseCredentials(Object credentials);
 
     /**
      * Set the current user.
@@ -46,4 +40,8 @@ public interface Guard {
      * @param user 用户实例
      */
     public void setUser(AuthenticateAble user);
+
+    public Object login(AuthenticateAble user) throws Throwable;
+
+    public Guard clone() throws CloneNotSupportedException;
 }

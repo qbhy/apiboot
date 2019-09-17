@@ -37,10 +37,10 @@ public class DatabaseUserProvider implements UserProvider {
 
     @Override
     public AuthenticateAble retrieveByCredentials(Map<String, String> credentials) {
-        if(userRepository instanceof RetrieveAble){
+        if (userRepository instanceof RetrieveAble) {
             return ((RetrieveAble) userRepository).retrieveByCredentials(credentials);
         }
-        return null;
+        return userRepository.findById(Long.parseLong(credentials.get("id"))).orElse(null);
     }
 
     @Override

@@ -3,12 +3,13 @@ package com.qbhy.apiboot.framework.http.aspect;
 import com.qbhy.apiboot.app.exceptions.Handler;
 import com.qbhy.apiboot.app.http.HttpKernel;
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Dockable;
-import com.qbhy.apiboot.framework.http.middleware.HttpMiddlewarePipeline;
-import com.qbhy.apiboot.framework.http.middleware.Middleware;
-import com.qbhy.apiboot.framework.http.middleware.MiddlewareTemplate;
+import com.qbhy.apiboot.framework.http.middlewares.HttpMiddlewarePipeline;
+import com.qbhy.apiboot.framework.http.middlewares.Middleware;
+import com.qbhy.apiboot.framework.http.middlewares.MiddlewareTemplate;
 import com.qbhy.apiboot.framework.http.response.Response;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -57,8 +58,10 @@ public class HttpAspect {
             excludes.addAll(Arrays.asList(targetClassAnnotation.excludes()));
         }
 
-        Method method = targetClass.getMethod(joinPoint.getSignature().getName());
+        MethodSignature methodSign = (MethodSignature) joinPoint.getSignature();
+        Method method = methodSign.getMethod();
         Middleware targetMethodAnnotation = method.getAnnotation(Middleware.class);
+
         if (targetMethodAnnotation != null) {
             if (targetMethodAnnotation.template() == MiddlewareTemplate.BLANK) {
                 middlewareStack = targetMethodAnnotation.excludeGlobal() ? new ArrayList<>() : new ArrayList<>(this.globalMiddlewareStack);
