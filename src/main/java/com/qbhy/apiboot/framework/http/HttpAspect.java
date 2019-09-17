@@ -58,11 +58,11 @@ public class HttpAspect {
         Middleware targetMethodAnnotation = method.getAnnotation(Middleware.class);
         if (targetMethodAnnotation != null) {
             if (targetMethodAnnotation.template() == MiddlewareTemplate.BLANK) {
-                middlewareStack = targetMethodAnnotation.excludeGlobal() ? new ArrayList<>() : this.globalMiddlewareStack;
+                middlewareStack = targetMethodAnnotation.excludeGlobal() ? new ArrayList<>() : new ArrayList<>(this.globalMiddlewareStack);
                 groups = new ArrayList<>();
                 excludes = new ArrayList<>();
             } else if (targetMethodAnnotation.template() == MiddlewareTemplate.EXTENDS) {
-                middlewareStack = targetMethodAnnotation.excludeGlobal() ? new ArrayList<>() : this.globalMiddlewareStack;
+                middlewareStack = targetMethodAnnotation.excludeGlobal() ? new ArrayList<>() : new ArrayList<>(this.globalMiddlewareStack);
             }
             groups.addAll(Arrays.asList(targetMethodAnnotation.groups()));
             excludes.addAll(Arrays.asList(targetMethodAnnotation.excludes()));
