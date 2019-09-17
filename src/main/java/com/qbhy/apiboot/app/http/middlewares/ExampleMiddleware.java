@@ -1,7 +1,7 @@
 package com.qbhy.apiboot.app.http.middlewares;
 
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Stack;
-import com.qbhy.apiboot.framework.http.HttpMiddleware;
+import com.qbhy.apiboot.framework.http.middleware.HttpMiddleware;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;

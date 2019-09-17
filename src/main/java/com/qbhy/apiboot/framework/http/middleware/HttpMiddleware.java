@@ -1,4 +1,4 @@
-package com.qbhy.apiboot.framework.http;
+package com.qbhy.apiboot.framework.http.middleware;
 
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Dockable;
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Stack;

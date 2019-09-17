@@ -1,4 +1,4 @@
-package com.qbhy.apiboot.framework.http;
+package com.qbhy.apiboot.framework.http.controller;
 
 import com.qbhy.apiboot.framework.http.response.Response;
 

@@ -1,4 +1,4 @@
-package com.qbhy.apiboot.framework.http;
+package com.qbhy.apiboot.framework.http.middleware;
 
 public enum MiddlewareTemplate {
     /**

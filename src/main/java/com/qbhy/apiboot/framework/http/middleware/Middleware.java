@@ -1,4 +1,4 @@
-package com.qbhy.apiboot.framework.http;
+package com.qbhy.apiboot.framework.http.middleware;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
