@@ -39,7 +39,7 @@ public class AuthManager {
         return this;
     }
 
-    public AuthenticateAble user(HttpServletRequest request) {
+    public AuthenticateAble user(HttpServletRequest request) throws Throwable {
         Guard guard = guardStack.get(request);
 
         return guard != null ? guard.user() : null;

@@ -32,7 +32,7 @@ public interface Guard extends Cloneable {
      */
     public Object id();
 
-    public Guard parseCredentials(Object credentials);
+    public Guard parseCredentials(Object credentials) throws Throwable;
 
     /**
      * Set the current user.

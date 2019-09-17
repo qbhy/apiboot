@@ -1,10 +1,9 @@
-package com.qbhy.apiboot.framework.http.middlewares;
+package com.qbhy.apiboot.framework.auth;
 
-import com.qbhy.apiboot.app.exceptions.auth.UnauthorizedException;
-import com.qbhy.apiboot.framework.auth.AuthManager;
 import com.qbhy.apiboot.framework.contracts.auth.Guard;
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Stack;
 import com.qbhy.apiboot.framework.foundation.App;
+import com.qbhy.apiboot.framework.http.middlewares.HttpMiddleware;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;

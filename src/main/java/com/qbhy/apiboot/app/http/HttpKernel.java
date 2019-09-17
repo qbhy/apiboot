@@ -1,6 +1,6 @@
 package com.qbhy.apiboot.app.http;
 
-import com.qbhy.apiboot.framework.http.middlewares.AuthenticateMiddleware;
+import com.qbhy.apiboot.framework.auth.AuthenticateMiddleware;
 import com.qbhy.apiboot.app.http.middlewares.ExampleMiddleware;
 import com.qbhy.apiboot.app.http.middlewares.ExampleGlobalMiddleware;
 import com.qbhy.apiboot.framework.contracts.http.HttpMiddlewareRegister;
@@ -26,13 +26,9 @@ public class HttpKernel implements Kernel, HttpMiddlewareRegister {
     public Map<String, List<Dockable>> registerMiddlewareGroups() {
         Map<String, List<Dockable>> groups = new HashMap<>();
 
-        groups.put("example", Arrays.asList(
-                exampleMiddleware
-        ));
+        groups.put("example", Arrays.asList(exampleMiddleware));
 
-        groups.put("jwt.auth", Arrays.asList(new Dockable[]{
-                new AuthenticateMiddleware("jwt")
-        }));
+        groups.put("jwt.auth", Arrays.asList(new AuthenticateMiddleware("jwt")));
 
         return groups;
     }

@@ -2,7 +2,6 @@ package com.qbhy.apiboot.framework.auth;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.qbhy.apiboot.framework.auth.guard.AbstractGuard;
@@ -54,14 +53,18 @@ public class JwtGuard extends AbstractGuard {
     }
 
     @Override
-    public Guard parseCredentials(Object credentialsOrigin) {
+    public Guard parseCredentials(Object credentialsOrigin) throws Throwable {
         HttpServletRequest request = (HttpServletRequest) credentialsOrigin;
 
         // 从 headers 中获取 token
         String token = request.getHeader("Authorization");
         if (token != null && token.startsWith("Bearer ")) {
-            credentials.put("token", token.substring(6));
-            System.out.println(credentials);
+            credentials.put("token", token.substring(7));
+
+        }
+
+        if (credentials.get("token") == null) {
+            throw new MissingCredentialException("缺少身份凭证令牌!");
         }
 
         return this;
@@ -72,6 +75,12 @@ public class JwtGuard extends AbstractGuard {
         this.user = user;
     }
 
+    /**
+     * 根据 token 获取用户
+     *
+     * @param token token
+     * @return 用户
+     */
     public AuthenticateAble user(String token) {
         try {
             DecodedJWT jwt = JWT.require(algorithm).withIssuer("auth0").build().verify(token);
@@ -84,7 +93,7 @@ public class JwtGuard extends AbstractGuard {
 
     @Override
     public String login(AuthenticateAble user) {
-        if(user != null){
+        if (user != null) {
             this.user = user;
             return JWT.create()
                     .withIssuer("auth0")
