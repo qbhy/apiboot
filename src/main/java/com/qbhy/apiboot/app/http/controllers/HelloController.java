@@ -21,13 +21,16 @@ public class HelloController extends BaseController {
     AuthManager authManager;
 
     @RequestMapping("/")
-    public Object hello() {
-        return ok("hello controller");
+    public Object hello(HttpServletRequest request) throws Throwable {
+        System.out.println(request);
+        User user = (User) authManager.user(request);
+        return ok(user != null ? user.getName() + "用户已经登录" : "用户未登录");
     }
 
     @RequestMapping("/auth")
     @Middleware(groups = "jwt.auth")
     public Object auth(HttpServletRequest request) throws Throwable {
+        System.out.println(request);
         User user = (User) authManager.user(request);
         return ok(user);
     }

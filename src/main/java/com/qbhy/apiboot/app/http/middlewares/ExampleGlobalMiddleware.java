@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 public class ExampleGlobalMiddleware extends HttpMiddleware {
     @Override
     public ResponseEntity handle(HttpServletRequest request, Stack stack) throws Throwable {
-        System.out.println(request);
-        System.out.println("ExampleGlobalMiddleware");
         return (ResponseEntity) stack.next(request);
     }
 }

@@ -20,6 +20,8 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "auth")
 public class AuthConfig {
 
+    private String defaultGuard = "jwt";
+
     private String jwtSecret = "apiboot";
 
     @Autowired
@@ -35,13 +37,21 @@ public class AuthConfig {
 
     @Bean
     public GuardProvider guards() {
-        return () -> {
-            Map<String, Guard> guards = new HashMap<>();
+        return new GuardProvider() {
+            @Override
+            public Map<String, Guard> guards() {
+                Map<String, Guard> guards = new HashMap<>();
 
-            // 添加guard
-            guards.put("jwt", new JwtGuard(databaseUserProvider, Algorithm.HMAC256(jwtSecret)));
+                // 添加guard
+                guards.put("jwt", new JwtGuard(databaseUserProvider, Algorithm.HMAC256(jwtSecret)));
 
-            return guards;
+                return guards;
+            }
+
+            @Override
+            public String defaultGuard() {
+                return defaultGuard;
+            }
         };
     }
 }

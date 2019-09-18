@@ -1,6 +1,5 @@
 package com.qbhy.apiboot.app.models;
 
-
 import com.qbhy.apiboot.framework.contracts.auth.AuthenticateAble;
 import lombok.Data;
 

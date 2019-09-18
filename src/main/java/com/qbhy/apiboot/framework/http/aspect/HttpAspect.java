@@ -2,6 +2,7 @@ package com.qbhy.apiboot.framework.http.aspect;
 
 import com.qbhy.apiboot.app.exceptions.Handler;
 import com.qbhy.apiboot.app.http.HttpKernel;
+import com.qbhy.apiboot.framework.auth.AuthManager;
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Dockable;
 import com.qbhy.apiboot.framework.http.middlewares.HttpMiddlewarePipeline;
 import com.qbhy.apiboot.framework.http.middlewares.Middleware;
@@ -26,6 +27,9 @@ public class HttpAspect {
 
     @Autowired
     Handler exceptionHandler;
+
+    @Autowired
+    AuthManager authManager;
 
     private Map<String, List<Dockable>> middlewareGroups;
     private List<Dockable> globalMiddlewareStack;
@@ -77,10 +81,14 @@ public class HttpAspect {
         middlewareStack.addAll(getGroups(groups, excludes));
 
         // 通过管道执行中间件和控制器逻辑
-        return (new HttpMiddlewarePipeline())
+        Object response =  (new HttpMiddlewarePipeline())
                 .send(request)
                 .through(middlewareStack)
                 .then(traveler -> toResponse(joinPoint.proceed()));
+
+        authManager.remove(request);
+
+        return response;
     }
 
     /**

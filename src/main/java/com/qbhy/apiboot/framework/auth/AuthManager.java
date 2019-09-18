@@ -11,9 +11,11 @@ import java.util.Map;
 public class AuthManager {
     private Map<String, Guard> guards;
     private Map<HttpServletRequest, Guard> guardStack;
+    private String defaultGuard;
 
     public AuthManager(GuardProvider provider) {
         guards = provider.guards();
+        defaultGuard = provider.defaultGuard();
         guardStack = new HashMap<>();
     }
 
@@ -42,6 +44,16 @@ public class AuthManager {
     public AuthenticateAble user(HttpServletRequest request) throws Throwable {
         Guard guard = guardStack.get(request);
 
-        return guard != null ? guard.user() : null;
+        if (guard != null) {
+            return guard.user();
+        }
+
+        try {
+            guard = guard(defaultGuard);
+            setGuard(request, guard);
+            return guard.parseCredentials(request).user();
+        } catch (Throwable throwable) {
+            return null;
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.qbhy.apiboot.framework.auth;
 
+import com.qbhy.apiboot.config.AuthConfig;
 import com.qbhy.apiboot.framework.contracts.auth.GuardProvider;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
