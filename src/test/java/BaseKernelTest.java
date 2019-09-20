@@ -1,8 +1,7 @@
 import com.qbhy.apiboot.ApiApplication;
 import com.qbhy.apiboot.app.repositories.UserRepository;
 import com.qbhy.apiboot.framework.auth.AuthManager;
-import com.qbhy.apiboot.framework.auth.GuardNotFoundException;
-import com.qbhy.apiboot.framework.auth.JwtGuard;
+import com.qbhy.apiboot.framework.auth.guard.JwtGuard;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

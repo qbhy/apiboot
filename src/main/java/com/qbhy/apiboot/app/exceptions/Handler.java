@@ -7,16 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
-@ControllerAdvice
-public class Handler extends ResponseEntityExceptionHandler implements HttpExceptionHandler {
+@Component
+public class Handler implements HttpExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(Handler.class);
 
@@ -30,8 +27,6 @@ public class Handler extends ResponseEntityExceptionHandler implements HttpExcep
      * @param throwable 异常实例
      * @return 响应实例
      */
-    @ExceptionHandler(Throwable.class)
-    @ResponseBody
     @Override
     public ResponseEntity<?> handle(HttpServletRequest request, Throwable throwable) {
         this.report(throwable);
@@ -63,7 +58,7 @@ public class Handler extends ResponseEntityExceptionHandler implements HttpExcep
         return HttpStatus.valueOf(statusCode);
     }
 
-    public static HashMap<String, Object> reformat(Throwable throwable) {
+    private static HashMap<String, Object> reformat(Throwable throwable) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("class", throwable.getClass().getName());
         map.put("message", throwable.getMessage());

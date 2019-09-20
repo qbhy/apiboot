@@ -5,6 +5,7 @@ import com.qbhy.apiboot.app.models.User;
 import com.qbhy.apiboot.framework.auth.AuthManager;
 import com.qbhy.apiboot.framework.http.middlewares.Middleware;
 import com.qbhy.apiboot.framework.http.controller.BaseController;
+import org.apache.catalina.connector.RequestFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,18 +22,16 @@ public class HelloController extends BaseController {
     AuthManager authManager;
 
     @RequestMapping("/")
-    public Object hello(HttpServletRequest request) throws Throwable {
-        System.out.println(request);
-        User user = (User) authManager.user(request);
+    public Object hello(RequestFacade request) {
+        User user = (User) authManager.user();
+//        User user = (User) authManager.user("guard");
         return ok(user != null ? user.getName() + "用户已经登录" : "用户未登录");
     }
 
     @RequestMapping("/auth")
     @Middleware(groups = "jwt.auth")
-    public Object auth(HttpServletRequest request) throws Throwable {
-        System.out.println(request);
-        User user = (User) authManager.user(request);
-        return ok(user);
+    public Object auth(HttpServletRequest request) {
+        return ok(authManager.user());
     }
 
     @RequestMapping("/exception")

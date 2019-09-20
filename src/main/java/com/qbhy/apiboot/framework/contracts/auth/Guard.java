@@ -1,7 +1,5 @@
 package com.qbhy.apiboot.framework.contracts.auth;
 
-import java.util.Map;
-
 public interface Guard extends Cloneable {
 
     /**
@@ -26,6 +24,14 @@ public interface Guard extends Cloneable {
     public AuthenticateAble user();
 
     /**
+     * 直接取 guard 属性
+     *
+     * @param get 是否直接从属性中获取
+     * @return UserContract
+     */
+    public AuthenticateAble user(boolean get);
+
+    /**
      * Get the ID for the currently authenticated user.
      *
      * @return int|string|null
@@ -41,7 +47,29 @@ public interface Guard extends Cloneable {
      */
     public void setUser(AuthenticateAble user);
 
+    /**
+     * 用户登录
+     *
+     * @param user 用户
+     * @return token 之类的
+     * @throws Throwable 异常
+     */
     public Object login(AuthenticateAble user) throws Throwable;
 
+    /**
+     * 克隆 guard 实例
+     *
+     * @return 克隆后的实例
+     * @throws CloneNotSupportedException 异常
+     */
     public Guard clone() throws CloneNotSupportedException;
+
+
+    /**
+     * 凭证唯一key
+     *
+     * @return key
+     */
+    public String credentialsKey(Object credentials);
+
 }

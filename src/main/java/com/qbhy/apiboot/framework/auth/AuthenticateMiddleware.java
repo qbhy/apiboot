@@ -26,8 +26,16 @@ public class AuthenticateMiddleware extends HttpMiddleware {
             throw new UnauthorizedException("未经授权的请求!");
         }
 
-        authManager.setGuard(request, guard);
+        String credentialsKey = guard.credentialsKey(request);
 
-        return (ResponseEntity) stack.next(request);
+        // 临时存起来
+        authManager.getUsers().put(credentialsKey, guard.user());
+
+        // 执行控制器逻辑
+        ResponseEntity response = (ResponseEntity) stack.next(request);
+
+        // 控制器执行完后移除
+        authManager.getUsers().remove(credentialsKey);
+        return response;
     }
 }

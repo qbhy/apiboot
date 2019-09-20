@@ -1,26 +1,20 @@
-package com.qbhy.apiboot.framework.auth;
+package com.qbhy.apiboot.framework.auth.guard;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.qbhy.apiboot.framework.auth.guard.AbstractGuard;
+import com.qbhy.apiboot.framework.auth.MissingCredentialException;
 import com.qbhy.apiboot.framework.contracts.auth.AuthenticateAble;
 import com.qbhy.apiboot.framework.contracts.auth.Guard;
 import com.qbhy.apiboot.framework.contracts.auth.UserProvider;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
 
 public class JwtGuard extends AbstractGuard {
     private UserProvider userProvider;
 
     private Algorithm algorithm;
-
-    private AuthenticateAble user;
-
-    private Map<String, String> credentials = new HashMap<>();
 
     public JwtGuard(UserProvider userProvider, Algorithm algorithmHS) {
         this.userProvider = userProvider;
@@ -57,10 +51,9 @@ public class JwtGuard extends AbstractGuard {
         HttpServletRequest request = (HttpServletRequest) credentialsOrigin;
 
         // 从 headers 中获取 token
-        String token = request.getHeader("Authorization");
-        if (token != null && token.startsWith("Bearer ")) {
-            credentials.put("token", token.substring(7));
-
+        String bearer = request.getHeader("Authorization");
+        if (bearer != null && bearer.startsWith("Bearer ") && bearer.length() > 7) {
+            credentials.put("token", bearer.substring(7));
         }
 
         if (credentials.get("token") == null) {
@@ -102,5 +95,15 @@ public class JwtGuard extends AbstractGuard {
         }
 
         return null;
+    }
+
+    @Override
+    public String credentialsKey(Object credentialsOrigin) {
+        try {
+            parseCredentials(credentialsOrigin);
+            return "jwt:" + credentials.get("token");
+        } catch (Throwable throwable) {
+            return null;
+        }
     }
 }

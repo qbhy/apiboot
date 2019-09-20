@@ -8,14 +8,13 @@ import com.qbhy.apiboot.framework.http.middlewares.HttpMiddlewarePipeline;
 import com.qbhy.apiboot.framework.http.middlewares.Middleware;
 import com.qbhy.apiboot.framework.http.middlewares.MiddlewareTemplate;
 import com.qbhy.apiboot.framework.http.response.Response;
+import com.qbhy.apiboot.framework.util.RequestUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -46,7 +45,7 @@ public class HttpAspect {
 
     @Around("controllerAspect()")
     public Object aroundPointcut(ProceedingJoinPoint joinPoint) throws Throwable {
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        HttpServletRequest request = RequestUtil.request();
 
         // 需要执行的中间件
         List<Dockable> middlewareStack = new ArrayList<>(this.globalMiddlewareStack);
@@ -80,15 +79,15 @@ public class HttpAspect {
 
         middlewareStack.addAll(getGroups(groups, excludes));
 
-        // 通过管道执行中间件和控制器逻辑
-        Object response =  (new HttpMiddlewarePipeline())
-                .send(request)
-                .through(middlewareStack)
-                .then(traveler -> toResponse(joinPoint.proceed()));
-
-        authManager.remove(request);
-
-        return response;
+        try {
+            // 通过管道执行中间件和控制器逻辑
+            return (new HttpMiddlewarePipeline())
+                    .send(request)
+                    .through(middlewareStack)
+                    .then(traveler -> toResponse(joinPoint.proceed()));
+        } catch (Throwable throwable) {
+            return exceptionHandler.handle(request, throwable);
+        }
     }
 
     /**
