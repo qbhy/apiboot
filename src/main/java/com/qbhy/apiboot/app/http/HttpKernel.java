@@ -6,6 +6,7 @@ import com.qbhy.apiboot.app.http.middlewares.ExampleGlobalMiddleware;
 import com.qbhy.apiboot.framework.contracts.http.HttpMiddlewareRegister;
 import com.qbhy.apiboot.framework.contracts.http.Kernel;
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Dockable;
+import com.qbhy.apiboot.framework.http.middlewares.cross.CrossMiddleware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,12 @@ public class HttpKernel implements Kernel, HttpMiddlewareRegister {
 
     @Autowired
     ExampleMiddleware exampleMiddleware;
+
+    /**
+     * 跨域中间件
+     */
+    @Autowired
+    CrossMiddleware crossMiddleware;
 
     /**
      * 普通中间件组
@@ -41,7 +48,8 @@ public class HttpKernel implements Kernel, HttpMiddlewareRegister {
     @Override
     public List<Dockable> registerGlobalMiddlewares() {
         return Arrays.asList(
-                new ExampleGlobalMiddleware()
+                new ExampleGlobalMiddleware(),
+                crossMiddleware
         );
     }
 }
