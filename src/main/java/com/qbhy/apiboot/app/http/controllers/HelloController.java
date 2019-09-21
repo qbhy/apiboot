@@ -40,7 +40,7 @@ public class HelloController extends BaseController {
     }
 
     @RequestMapping("/event")
-    public Object sendEvent()  {
+    public Object sendEvent() {
         eventPublisher.publishEvent(new ExampleEvent(this, "测试"));
         return raw("响应");
     }
