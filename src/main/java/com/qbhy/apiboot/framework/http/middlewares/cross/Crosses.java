@@ -6,8 +6,8 @@ public class Crosses extends HashMap<String, Cross> {
     /**
      * 自己指定cross
      *
-     * @param cross
-     * @return
+     * @param cross cross
+     * @return Crosses
      */
     public Crosses add(Cross cross) {
         this.put(cross.getHost(), cross);
@@ -16,12 +16,10 @@ public class Crosses extends HashMap<String, Cross> {
 
     /**
      * 使用默认cross
-     * @param host
-     * @return
+     * @param host host
+     * @return Crosses
      */
     public Crosses add(String host) {
-        Cross cross = new Cross(host);
-        this.put(cross.getHost(), cross);
-        return this;
+        return add(new Cross(host));
     }
 }

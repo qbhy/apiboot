@@ -8,7 +8,7 @@ import java.util.Date;
 @Component
 public class ExampleScheduleTask {
 
-    @Scheduled(fixedRate = 5000)
+//    @Scheduled(fixedRate = 5000)
 //    @Scheduled(fixedDelay = 5000)
 //    @Scheduled(cron = "* * * * *")
     public void now() {
