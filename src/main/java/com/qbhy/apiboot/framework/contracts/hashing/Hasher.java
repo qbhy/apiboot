@@ -8,7 +8,7 @@ public interface Hasher {
      * @param hashedValue 散列值
      * @return array
      */
-    public Object info(String hashedValue);
+    public Object info(String hashedValue) throws Throwable;
 
     /**
      * Hash the given value.
@@ -17,7 +17,7 @@ public interface Hasher {
      * @param options 配置
      * @return string
      */
-    public String make(String value, HashOptions options);
+    public String make(String value, HashOptions options) throws Throwable;
 
     /**
      * Check the given plain value against a hash.
@@ -27,7 +27,7 @@ public interface Hasher {
      * @param options     配置
      * @return bool
      */
-    public boolean check(String value, String hashedValue,HashOptions options);
+    public boolean check(String value, String hashedValue, HashOptions options) throws Throwable;
 
     /**
      * Check if the given hash has been hashed using the given options.
@@ -36,5 +36,5 @@ public interface Hasher {
      * @param options     配置
      * @return bool
      */
-    public boolean needsRehash(String hashedValue, HashOptions options);
+    public boolean needsRehash(String hashedValue, HashOptions options) throws Throwable;
 }

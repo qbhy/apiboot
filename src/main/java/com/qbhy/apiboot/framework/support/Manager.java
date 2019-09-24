@@ -7,6 +7,13 @@ abstract public class Manager<T> {
 
     protected Map<String, T> drivers = new HashMap<>();
 
+    protected Map<String, DriverProvider<T>> driverProviders;
+
+    /**
+     * 设置驱动供应商
+     */
+    abstract public void setDriverProviders();
+
     /**
      * 获取默认驱动
      *
@@ -14,11 +21,22 @@ abstract public class Manager<T> {
      */
     protected abstract String defaultDriver();
 
-    public T driver() {
+    /**
+     * 使用默认驱动获取
+     *
+     * @return T
+     */
+    public T driver() throws DriverException {
         return driver(defaultDriver());
     }
 
-    public T driver(String name) {
+    /**
+     * 指定驱动获取
+     *
+     * @param name 驱动名称
+     * @return T
+     */
+    public T driver(String name) throws DriverException {
         T driver = drivers.get(name);
 
         if (driver != null) {
@@ -33,8 +51,28 @@ abstract public class Manager<T> {
         return driver;
     }
 
-    protected T createDriver(String driver) {
+    /**
+     * 创建驱动
+     *
+     * @param name 驱动名
+     * @return 驱动
+     * @throws DriverException 驱动异常
+     */
+    protected T createDriver(String name) throws DriverException {
 
-        return null;
+        if (driverProviders == null) {
+            setDriverProviders();
+        }
+
+        DriverProvider<T> provider = driverProviders.get(name);
+        T driver;
+        if (provider != null) {
+            driver = provider.get();
+            if (driver != null) {
+                return driver;
+            }
+        }
+
+        throw new DriverException(name + " Driver not found.");
     }
 }

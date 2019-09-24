@@ -1,7 +1,10 @@
 import com.qbhy.apiboot.ApiApplication;
 import com.qbhy.apiboot.app.repositories.UserRepository;
+import com.qbhy.apiboot.config.HashingConfig;
 import com.qbhy.apiboot.framework.auth.AuthManager;
 import com.qbhy.apiboot.framework.auth.guard.JwtGuard;
+import com.qbhy.apiboot.framework.hashing.HashManager;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,12 @@ public class BaseKernelTest {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    HashManager hashManager;
+
+    @Autowired
+    HashingConfig hashingConfig;
+
     @Test
     public void testAuthService() throws Throwable {
         System.out.println(authManager.guard("jwt").login(userRepository.findById(1L).orElseThrow(() -> new Exception("抛异常"))));
@@ -25,7 +34,9 @@ public class BaseKernelTest {
     }
 
     @Test
-    public void testEncrypt() {
-
+    public void testHashing() throws Throwable {
+        String hashedValue = hashManager.make("string", hashingConfig);
+        System.out.println(hashedValue);
+        Assert.assertTrue("结果", hashManager.check("string", hashedValue, hashingConfig));
     }
 }
