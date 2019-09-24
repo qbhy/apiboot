@@ -20,7 +20,12 @@ public class BaseKernelTest {
 
     @Test
     public void testAuthService() throws Throwable {
-        System.out.println(authManager.guard("jwt").login(userRepository.findById(1L).orElse(null)));
+        System.out.println(authManager.guard("jwt").login(userRepository.findById(1L).orElseThrow(() -> new Exception("抛异常"))));
         System.out.println(((JwtGuard) authManager.guard("jwt")).user("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsImlkIjoiMSJ9.Tq7E8jH9luxEOtsaySyQFSmdPEnnAkYg_SYwIaCBHjc"));
+    }
+
+    @Test
+    public void testEncrypt() {
+
     }
 }

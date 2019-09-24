@@ -20,7 +20,7 @@ public class MailConfig {
 
     private String password;
 
-    @Bean
+    @Bean("defaultMailSender")
     public MailSender mailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(host);//指定用来发送Email的邮件服务器主机名
