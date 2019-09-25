@@ -1,8 +1,9 @@
 package com.qbhy.apiboot.framework.hashing;
 
-import com.qbhy.apiboot.framework.contracts.hashing.HashOptions;
+import com.qbhy.apiboot.framework.contracts.hashing.SecretProvider;
 import com.qbhy.apiboot.framework.contracts.hashing.Hasher;
 import com.qbhy.apiboot.framework.support.Manager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -10,13 +11,16 @@ import java.util.HashMap;
 @Component
 public class HashManager extends Manager<Hasher> implements Hasher {
 
+    @Autowired
+    SecretProvider secretProvider;
+
     /**
      * 设置驱动供应商
      */
     @Override
     public void setDriverProviders() {
         driverProviders = new HashMap<>();
-        driverProviders.put("md5", Md5Hasher::new);
+        driverProviders.put("md5", () -> new Md5Hasher(secretProvider));
     }
 
     /**
@@ -43,13 +47,12 @@ public class HashManager extends Manager<Hasher> implements Hasher {
     /**
      * Hash the given value.
      *
-     * @param value   需要哈希字符串
-     * @param options 配置
+     * @param value 需要哈希字符串
      * @return string
      */
     @Override
-    public String make(String value, HashOptions options) throws Throwable {
-        return driver().make(value, options);
+    public String make(String value) throws Throwable {
+        return driver().make(value);
     }
 
     /**
@@ -57,23 +60,21 @@ public class HashManager extends Manager<Hasher> implements Hasher {
      *
      * @param value       需要校验的字符串
      * @param hashedValue 哈希后的字符串
-     * @param options     配置
      * @return bool
      */
     @Override
-    public boolean check(String value, String hashedValue, HashOptions options) throws Throwable {
-        return driver().check(value, hashedValue, options);
+    public boolean check(String value, String hashedValue) throws Throwable {
+        return driver().check(value, hashedValue);
     }
 
     /**
      * Check if the given hash has been hashed using the given options.
      *
      * @param hashedValue 哈希后的字符串
-     * @param options     配置
      * @return bool
      */
     @Override
-    public boolean needsRehash(String hashedValue, HashOptions options) throws Throwable {
-        return driver().needsRehash(hashedValue, options);
+    public boolean needsRehash(String hashedValue) throws Throwable {
+        return driver().needsRehash(hashedValue);
     }
 }

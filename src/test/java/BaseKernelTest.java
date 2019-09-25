@@ -1,5 +1,4 @@
 import com.qbhy.apiboot.ApiApplication;
-import com.qbhy.apiboot.app.models.User;
 import com.qbhy.apiboot.app.repositories.UserRepository;
 import com.qbhy.apiboot.config.HashingConfig;
 import com.qbhy.apiboot.framework.auth.AuthManager;
@@ -37,8 +36,8 @@ public class BaseKernelTest {
 
     @Test
     public void testHashing() throws Throwable {
-        String hashedValue = hashManager.make("string", hashingConfig);
+        String hashedValue = hashManager.make("string");
         System.out.println(hashedValue);
-        Assert.assertTrue("结果", hashManager.check("string", hashedValue, hashingConfig));
+        Assert.assertTrue("结果", hashManager.check("string", hashedValue));
     }
 }

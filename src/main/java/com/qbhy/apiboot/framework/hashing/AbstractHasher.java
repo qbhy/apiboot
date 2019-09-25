@@ -1,11 +1,17 @@
 package com.qbhy.apiboot.framework.hashing;
 
-import com.qbhy.apiboot.framework.contracts.hashing.HashOptions;
+import com.qbhy.apiboot.framework.contracts.hashing.SecretProvider;
 import com.qbhy.apiboot.framework.contracts.hashing.Hasher;
 
 import java.security.MessageDigest;
 
 abstract public class AbstractHasher implements Hasher {
+
+    protected SecretProvider secretProvider;
+
+    protected AbstractHasher(SecretProvider secretProvider) {
+        this.secretProvider = secretProvider;
+    }
 
     /**
      * Get information about the given hashed value.
@@ -19,19 +25,18 @@ abstract public class AbstractHasher implements Hasher {
     }
 
     @Override
-    public boolean check(String value, String hashedValue, HashOptions options) throws Throwable {
-        return MessageDigest.isEqual(make(value, options).getBytes(), hashedValue.getBytes());
+    public boolean check(String value, String hashedValue) throws Throwable {
+        return MessageDigest.isEqual(make(value).getBytes(), hashedValue.getBytes());
     }
 
     /**
      * Check if the given hash has been hashed using the given options.
      *
      * @param hashedValue 哈希后的字符串
-     * @param options     配置
      * @return bool
      */
     @Override
-    public boolean needsRehash(String hashedValue, HashOptions options) {
+    public boolean needsRehash(String hashedValue) {
         return false;
     }
 }

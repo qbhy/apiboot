@@ -3,6 +3,7 @@ package com.qbhy.apiboot.framework.auth;
 import com.qbhy.apiboot.framework.contracts.auth.AuthenticateAble;
 import com.qbhy.apiboot.framework.contracts.auth.Guard;
 import com.qbhy.apiboot.framework.contracts.auth.GuardProvider;
+import com.qbhy.apiboot.framework.support.DriverException;
 import com.qbhy.apiboot.framework.support.Manager;
 import com.qbhy.apiboot.framework.util.RequestUtil;
 
@@ -43,6 +44,15 @@ public class AuthManager extends Manager<Guard> {
 
     public Map<String, AuthenticateAble> getUsers() {
         return users;
+    }
+
+    @Override
+    public Guard driver(String name) throws DriverException {
+        try {
+            return super.driver(name).clone();
+        } catch (CloneNotSupportedException e) {
+            throw new DriverException(e.getMessage());
+        }
     }
 
     public AuthenticateAble user(String guardName) {

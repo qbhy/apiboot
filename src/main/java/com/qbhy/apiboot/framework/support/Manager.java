@@ -39,14 +39,10 @@ abstract public class Manager<T> {
     public T driver(String name) throws DriverException {
         T driver = drivers.get(name != null ? name : defaultDriver());
 
-        if (driver != null) {
-            return driver;
+        if (driver == null) {
+            driver = createDriver(name);
+            drivers.put(name, driver);
         }
-
-        driver = createDriver(name);
-
-        drivers.put(name, driver);
-
 
         return driver;
     }
