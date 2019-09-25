@@ -1,4 +1,5 @@
 import com.qbhy.apiboot.ApiApplication;
+import com.qbhy.apiboot.app.models.User;
 import com.qbhy.apiboot.app.repositories.UserRepository;
 import com.qbhy.apiboot.config.HashingConfig;
 import com.qbhy.apiboot.framework.auth.AuthManager;
@@ -29,8 +30,9 @@ public class BaseKernelTest {
 
     @Test
     public void testAuthService() throws Throwable {
-        System.out.println(authManager.guard("jwt").login(userRepository.findById(1L).orElseThrow(() -> new Exception("抛异常"))));
-        System.out.println(((JwtGuard) authManager.guard("jwt")).user("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsImlkIjoiMSJ9.Tq7E8jH9luxEOtsaySyQFSmdPEnnAkYg_SYwIaCBHjc"));
+        Object token = authManager.driver("jwt").login(userRepository.findById(1L).orElseThrow(() -> new Exception("抛异常")));
+        System.out.println(token);
+        System.out.println(((JwtGuard) authManager.driver("jwt")).user((String) token));
     }
 
     @Test

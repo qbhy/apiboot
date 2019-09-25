@@ -37,7 +37,7 @@ abstract public class Manager<T> {
      * @return T
      */
     public T driver(String name) throws DriverException {
-        T driver = drivers.get(name);
+        T driver = drivers.get(name != null ? name : defaultDriver());
 
         if (driver != null) {
             return driver;

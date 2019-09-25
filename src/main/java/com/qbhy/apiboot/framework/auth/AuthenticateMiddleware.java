@@ -20,7 +20,7 @@ public class AuthenticateMiddleware extends HttpMiddleware {
     public ResponseEntity handle(HttpServletRequest request, Stack stack) throws Throwable {
 
         AuthManager authManager = App.getBean(AuthManager.class);
-        Guard guard = authManager.guard(guardName);
+        Guard guard = authManager.driver(guardName);
 
         if (guard.parseCredentials(request).guest()) {
             throw new UnauthorizedException("未经授权的请求!");
