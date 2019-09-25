@@ -21,6 +21,10 @@ public class HashManager extends Manager<Hasher> implements Hasher {
     public void setDriverProviders() {
         driverProviders = new HashMap<>();
         driverProviders.put("md5", () -> new Md5Hasher(secretProvider));
+        driverProviders.put("sha1", () -> new Sha1Hasher(secretProvider));
+        driverProviders.put("sha256", () -> new Sha256Hasher(secretProvider));
+        driverProviders.put("sha384", () -> new Sha384Hasher(secretProvider));
+        driverProviders.put("sha512", () -> new Sha512Hasher(secretProvider));
     }
 
     /**

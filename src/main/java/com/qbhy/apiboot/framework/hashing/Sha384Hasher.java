@@ -2,9 +2,8 @@ package com.qbhy.apiboot.framework.hashing;
 
 import com.qbhy.apiboot.framework.contracts.hashing.SecretProvider;
 
-public class Md5Hasher extends BaseHasher {
-
-    public Md5Hasher(SecretProvider secretProvider) {
+public class Sha384Hasher extends BaseHasher {
+    public Sha384Hasher(SecretProvider secretProvider) {
         super(secretProvider);
     }
 
@@ -13,6 +12,6 @@ public class Md5Hasher extends BaseHasher {
      */
     @Override
     public String algorithm() {
-        return "MD5";
+        return "SHA-384";
     }
 }

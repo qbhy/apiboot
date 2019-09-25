@@ -2,14 +2,15 @@ package com.qbhy.apiboot.framework.hashing;
 
 import com.qbhy.apiboot.framework.contracts.hashing.SecretProvider;
 import com.qbhy.apiboot.framework.contracts.hashing.Hasher;
+import org.apache.tomcat.util.buf.HexUtils;
 
 import java.security.MessageDigest;
 
-abstract public class AbstractHasher implements Hasher {
+abstract public class BaseHasher implements Hasher {
 
     protected SecretProvider secretProvider;
 
-    protected AbstractHasher(SecretProvider secretProvider) {
+    protected BaseHasher(SecretProvider secretProvider) {
         this.secretProvider = secretProvider;
     }
 
@@ -38,5 +39,20 @@ abstract public class AbstractHasher implements Hasher {
     @Override
     public boolean needsRehash(String hashedValue) {
         return false;
+    }
+
+    /**
+     * @return 算法名称
+     */
+    abstract public String algorithm();
+
+    /**
+     * @param value 需要哈希字符串
+     * @return 哈希后的字符串
+     * @throws Throwable
+     */
+    @Override
+    public String make(String value) throws Throwable {
+        return HexUtils.toHexString(MessageDigest.getInstance(algorithm()).digest((value + secretProvider.get()).getBytes()));
     }
 }
