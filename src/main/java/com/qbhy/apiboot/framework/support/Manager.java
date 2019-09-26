@@ -71,4 +71,12 @@ abstract public class Manager<T> {
 
         throw new DriverException(name + " Driver not found.");
     }
+
+    public Manager<T> addProvider(String name, DriverProvider<T> provider) {
+        if (name != null && provider != null) {
+            driverProviders.put(name, provider);
+        }
+
+        return this;
+    }
 }
