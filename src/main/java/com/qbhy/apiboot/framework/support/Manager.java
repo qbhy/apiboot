@@ -72,6 +72,12 @@ abstract public class Manager<T> {
         throw new DriverException(name + " Driver not found.");
     }
 
+    /**
+     * 添加自己的驱动
+     * @param name 驱动名
+     * @param provider 驱动提供者
+     * @return this
+     */
     public Manager<T> addProvider(String name, DriverProvider<T> provider) {
         if (name != null && provider != null) {
             driverProviders.put(name, provider);
