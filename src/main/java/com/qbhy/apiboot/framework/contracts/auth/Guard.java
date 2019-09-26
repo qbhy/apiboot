@@ -24,6 +24,13 @@ public interface Guard extends Cloneable {
     public AuthenticateAble user();
 
     /**
+     * 通过凭证直接获取用户
+     *
+     * @return UserContract
+     */
+    public AuthenticateAble user(Object credentials);
+
+    /**
      * 直接取 guard 属性
      *
      * @param get 是否直接从属性中获取

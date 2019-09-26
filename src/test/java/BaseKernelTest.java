@@ -37,7 +37,7 @@ public class BaseKernelTest {
     public void testAuthService() throws Throwable {
         Object token = authManager.driver("jwt").login(userRepository.findById(1L).orElseThrow(() -> new Exception("抛异常")));
         System.out.println(token);
-        System.out.println(((JwtGuard) authManager.driver("jwt")).user((String) token));
+        System.out.println( authManager.driver("jwt").user(token));
     }
 
     @Test

@@ -74,9 +74,10 @@ public class JwtGuard extends AbstractGuard {
      * @param token token
      * @return 用户
      */
-    public AuthenticateAble user(String token) {
+    @Override
+    public AuthenticateAble user(Object token) {
         try {
-            DecodedJWT jwt = JWT.require(algorithm).withIssuer("auth0").build().verify(token);
+            DecodedJWT jwt = JWT.require(algorithm).withIssuer("auth0").build().verify((String) token);
             credentials.put("id", jwt.getClaim("id").asString());
             return user = userProvider.retrieveByCredentials(credentials);
         } catch (JWTVerificationException exception) {
