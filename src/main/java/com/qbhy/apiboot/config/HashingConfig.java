@@ -1,6 +1,6 @@
 package com.qbhy.apiboot.config;
 
-import com.qbhy.apiboot.framework.contracts.hashing.SecretProvider;
+import com.qbhy.apiboot.framework.contracts.kernel.SecretProvider;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

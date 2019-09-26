@@ -1,6 +1,6 @@
 package com.qbhy.apiboot.framework.hashing;
 
-import com.qbhy.apiboot.framework.contracts.hashing.SecretProvider;
+import com.qbhy.apiboot.framework.contracts.kernel.SecretProvider;
 import com.qbhy.apiboot.framework.contracts.hashing.Hasher;
 import org.apache.tomcat.util.buf.HexUtils;
 

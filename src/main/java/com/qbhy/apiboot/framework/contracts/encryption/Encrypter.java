@@ -1,7 +1,7 @@
 package com.qbhy.apiboot.framework.contracts.encryption;
 
 public interface Encrypter {
-    public String encrypt() throws EncryptException;
+    public String encrypt(String value) throws EncryptException;
 
-    public String decrypt()throws DecryptException;
+    public String decrypt(String value) throws DecryptException;
 }

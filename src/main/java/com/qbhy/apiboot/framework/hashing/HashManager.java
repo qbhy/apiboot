@@ -1,6 +1,6 @@
 package com.qbhy.apiboot.framework.hashing;
 
-import com.qbhy.apiboot.framework.contracts.hashing.SecretProvider;
+import com.qbhy.apiboot.framework.contracts.kernel.SecretProvider;
 import com.qbhy.apiboot.framework.contracts.hashing.Hasher;
 import com.qbhy.apiboot.framework.support.Manager;
 import org.springframework.beans.factory.annotation.Autowired;

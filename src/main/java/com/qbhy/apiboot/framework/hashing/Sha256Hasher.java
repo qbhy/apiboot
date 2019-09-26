@@ -1,6 +1,6 @@
 package com.qbhy.apiboot.framework.hashing;
 
-import com.qbhy.apiboot.framework.contracts.hashing.SecretProvider;
+import com.qbhy.apiboot.framework.contracts.kernel.SecretProvider;
 
 public class Sha256Hasher extends BaseHasher {
     public Sha256Hasher(SecretProvider secretProvider) {
