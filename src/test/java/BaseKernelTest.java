@@ -61,10 +61,18 @@ public class BaseKernelTest {
 
     @Test
     public void testEncrypt() throws Throwable {
-        String value = "test";
-        String encryptedValue = encrypterManager.encrypt(value);
-        System.out.println("加密后的字符串:" + encryptedValue);
-        String decryptedValue = encrypterManager.decrypt(encryptedValue);
-        System.out.println("解密后:" + decryptedValue + ",长度:" + decryptedValue.length());
+        String value = "测试中文加密";
+        String encryptedValue;
+        String decryptedValue;
+        String[] arr = new String[]{"aes", "des"};
+
+        for (String name : arr) {
+            System.out.println("驱动:" + name);
+            encryptedValue = encrypterManager.driver(name).encrypt(value);
+            System.out.println("加密后的字符串:" + encryptedValue);
+            decryptedValue = encrypterManager.driver(name).decrypt(encryptedValue);
+            System.out.println("解密后:" + decryptedValue + ",长度:" + decryptedValue.length());
+        }
     }
+
 }
