@@ -71,6 +71,7 @@ public class BaseKernelTest {
             encryptedValue = encrypterManager.driver(name).encrypt(value);
             System.out.println("加密后的字符串:" + encryptedValue);
             decryptedValue = encrypterManager.driver(name).decrypt(encryptedValue);
+            Assert.assertEquals(value, decryptedValue);
             System.out.println("解密后:" + decryptedValue + ",长度:" + decryptedValue.length());
         }
     }
