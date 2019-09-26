@@ -23,6 +23,7 @@ public class EncrypterManager extends Manager<Encrypter> implements Encrypter {
     @Override
     public void setDriverProviders() {
         driverProviders = new HashMap<>();
+        driverProviders.put("AES", () -> new AESEncrypter(secretProvider));
     }
 
     /**
@@ -32,7 +33,7 @@ public class EncrypterManager extends Manager<Encrypter> implements Encrypter {
      */
     @Override
     protected String defaultDriver() {
-        return "md5";
+        return "AES";
     }
 
     @Override
