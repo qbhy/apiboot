@@ -1,6 +1,6 @@
 package com.qbhy.apiboot.framework.http.aspect;
 
-import com.qbhy.apiboot.app.exceptions.Handler;
+import com.qbhy.apiboot.framework.debug.ExceptionHandler;
 import com.qbhy.apiboot.app.http.HttpKernel;
 import com.qbhy.apiboot.framework.auth.AuthManager;
 import com.qbhy.apiboot.framework.contracts.kernel.pipeline.Dockable;
@@ -25,7 +25,7 @@ import java.util.*;
 public class HttpAspect {
 
     @Autowired
-    Handler exceptionHandler;
+    ExceptionHandler exceptionHandler;
 
     @Autowired
     AuthManager authManager;

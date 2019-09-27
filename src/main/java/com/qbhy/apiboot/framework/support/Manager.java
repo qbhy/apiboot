@@ -73,8 +73,9 @@ abstract public class Manager<T> {
     }
 
     /**
-     * 添加自己的驱动
-     * @param name 驱动名
+     * 添加自定义的驱动
+     *
+     * @param name     驱动名
      * @param provider 驱动提供者
      * @return this
      */
